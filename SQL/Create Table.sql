@@ -1,0 +1,59 @@
+CREATE TABLE tab_accounts
+(
+ id INT PRIMARY KEY IDENTITY,
+ [login] VARCHAR(20) NOT NULL UNIQUE,
+ [password] VARCHAR(50)NOT NULL,
+ is_active BIT NOT NULL DEFAULT 1
+);
+
+CREATE TABLE tab_roles
+(
+  id INT PRIMARY KEY IDENTITY,
+  [name] NVARCHAR(20) NOT NULL,
+);
+
+CREATE TABLE tab_account_roles
+(
+  id INT PRIMARY KEY IDENTITY,
+  account_id INT NOT NULL,
+  role_id INT NOT NULL,
+  FOREIGN KEY (account_id) REFERENCES tab_accounts(id)
+       ON UPDATE NO ACTION 
+       ON DELETE NO ACTION,
+  FOREIGN KEY (role_id) REFERENCES tab_roles(id)
+       ON UPDATE NO ACTION 
+       ON DELETE NO ACTION
+);
+
+CREATE TABLE tab_persons
+(
+ id INT PRIMARY KEY IDENTITY,
+ first_name NVARCHAR(20) NOT NULL,
+ last_name NVARCHAR(20) NOT NULL,
+ date_of_birth DATE NOT NULL,
+ sex NCHAR NOT NULL,
+ FOREIGN KEY(id) REFERENCES tab_accounts(id)
+      ON UPDATE NO ACTION
+      ON DELETE NO ACTION
+);
+
+CREATE TABLE tab_groups
+(
+  id INT PRIMARY KEY IDENTITY,
+  [name] NVARCHAR(20) NOT NULL
+);
+
+CREATE TABLE tab_teachers
+(
+  id INT PRIMARY KEY IDENTITY,
+  person_id INT NOT NULL REFERENCES tab_persons(id) ON UPDATE NO ACTION ON DELETE NO ACTION,
+  group_id INT NOT NULL REFERENCES tab_groups(id) ON UPDATE NO ACTION ON DELETE NO ACTION
+);
+
+CREATE TABLE tab_students
+(
+  id INT PRIMARY KEY IDENTITY,
+  person_id INT NOT NULL REFERENCES tab_persons(id) ON UPDATE NO ACTION ON DELETE NO ACTION,
+  group_id INT NOT NULL REFERENCES tab_groups(id) ON UPDATE NO ACTION ON DELETE NO ACTION,
+  is_study BIT NOT NULL DEFAULT 1
+);
