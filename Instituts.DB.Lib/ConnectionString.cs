@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace Instituts.DB.Lib
 {
-    internal class ConnectionString
+    public class ConnectionString
     {
+        public string Server { get; set; }
+        public string Database { get; set; }
+
+        public override string ToString()
+        {
+            return $"Server={Server};Database={Database};";
+        }
     }
 }
