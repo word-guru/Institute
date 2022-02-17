@@ -7,4 +7,8 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Instituts.DB.Lib\Instituts.DB.Lib.csproj" />
+  </ItemGroup>
+
 </Project>
